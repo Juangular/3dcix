@@ -1,0 +1,85 @@
+:root {
+    --bg-dark: #0f172a;
+    --primary: #6366f1;
+    --success: #10b981;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --white: #ffffff;
+    --gray-light: #f8fafc;
+}
+
+body { font-family: 'Inter', sans-serif; margin: 0; background: var(--gray-light); color: var(--text-main); scroll-behavior: smooth; }
+
+/* Hero Moderno */
+.hero {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, #1e1b4b 100%);
+    color: var(--white);
+    padding: 80px 20px;
+    text-align: center;
+}
+.logo { font-size: 4rem; font-weight: 800; margin: 0; letter-spacing: -2px; }
+.subtitle { font-size: 1.5rem; color: #818cf8; font-weight: 600; margin-top: 10px; }
+.description-hero { max-width: 600px; margin: 20px auto; opacity: 0.9; }
+
+/* Filtros */
+.filtro-container { padding: 20px; display: flex; justify-content: center; background: var(--white); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow-x: auto; }
+.tags { display: flex; gap: 10px; flex-wrap: nowrap; padding-bottom: 5px; } /* Ajuste para scroll en móvil */
+.tag { padding: 8px 20px; background: var(--gray-light); border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; color: var(--text-muted); white-space: nowrap; }
+.tag.active { background: var(--primary); color: var(--white); }
+
+/* Grid */
+.contenedor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 40px 5%; max-width: 1400px; margin: 0 auto; }
+
+/* Tarjetas y Carrusel */
+.tarjeta-producto { background: var(--white); border-radius: 20px; overflow: hidden; transition: 0.4s; border: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+.tarjeta-producto:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+
+.carrusel { position: relative; height: 280px; background: #f1f5f9; }
+.carrusel img { width: 100%; height: 100%; object-fit: cover; display: none; }
+.carrusel img.activa { display: block; }
+
+.btn-carrusel { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; font-size: 1.2rem; z-index: 10; }
+.btn-prev { left: 10px; } .btn-next { right: 10px; }
+
+.info-producto { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+.categoria-label { font-size: 0.75rem; color: var(--primary); font-weight: 800; text-transform: uppercase; }
+.precio { font-size: 1.8rem; font-weight: 800; color: var(--bg-dark); margin: 15px 0; }
+
+.boton-comprar { display: block; background: var(--success); color: white; text-align: center; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; margin-top: auto; }
+
+/* Footer */
+.footer { background: var(--bg-dark); color: white; padding: 60px 5% 20px; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+.footer-seccion h3 { color: #818cf8; margin-bottom: 20px; }
+.footer-copy { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.6; }
+
+/* Paginación */
+.paginacion { display: flex; justify-content: center; align-items: center; gap: 20px; padding-bottom: 50px; }
+.btn-pag { padding: 10px 25px; border: none; background: var(--bg-dark); color: white; border-radius: 10px; cursor: pointer; font-weight: 600; }
+.btn-pag:disabled { opacity: 0.3; }
+
+/* --- RESPONSIVE DESIGN (NUEVO) --- */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .logo { font-size: 3.5rem; }
+    .contenedor-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+
+/* Celulares grandes */
+@media (max-width: 768px) {
+    .logo { font-size: 3rem; }
+    .subtitle { font-size: 1.2rem; }
+    .hero { padding: 60px 15px; }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .tags { flex-wrap: nowrap; justify-content: flex-start; }
+}
+
+/* Celulares pequeños */
+@media (max-width: 480px) {
+    .logo { font-size: 2.5rem; }
+    .description-hero { font-size: 0.9rem; }
+    .contenedor-grid { grid-template-columns: 1fr; padding: 20px; }
+    .carrusel { height: 220px; }
+    .paginacion { flex-direction: column; gap: 10px; }
+}
