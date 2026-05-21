@@ -5,11 +5,8 @@ const CONFIG = {
 
 const productos = [
     { id: 1, nombre: "Organizador de Figuras Mundial 2026 - Caja Coleccionista", precio: 29.00, cat: "Futbol", 
-        img: ["Assets/Caja Coleccionista 2.jpeg", "Assets/Caja Coleccionista 3.jpeg", "Assets/Caja Coleccionista 4.jpeg", "Assets/Caja Coleccionista 1.png"], 
+        img: ["Assets/Caja Coleccionista 2.jpeg", "Assets/Caja Coleccionista 3.jpeg", "Assets/Caja Coleccionista 4.jpeg", "Assets/Caja Coleccionista 1.png", "Assets/Caja Coleccionista 5.jpeg"], 
         desc: "¿Cansado de que tus figuras del Mundial se doblen o se pierdan? ¡Protégelas como un verdadero campeón! ⚽🏆" },
-    { id: 12, nombre: "Organizador de Juegos PS5 - Torre de Discos Aesthetic", precio: 19.00, cat: "Gaming", 
-        img: ["Assets/Soporte Juego 1.jpg", "Assets/Soporte Juego 2.jpg", "Assets/Soporte Juego 3.jpg", "Assets/Soporte Juego 4.jpg"], 
-        desc: "¿Tus juegos de PS5 están tirados por todo el mueble? ¡Dales el lugar que se merecen con esta Torre de Discos Pro! 🎮🔵" },
     { id: 2, nombre: "Soporte Audífonos Sakura Aesthetic - Diseño Cerezo Japonés", precio: 33.00, cat: "Setup", 
         img: ["Assets/Soporte audifono 4.jpg", "Assets/Soporte audifono 2.jpeg", "Assets/Soporte audifono 3.jpeg", "Assets/Soporte audifono 1.jpg"], 
         desc: "¿Quieres el setup más lindo de Lima? Dale un toque Zen y Aesthetic a tu escritorio con el Soporte Sakura. 🌸✨" },
@@ -39,7 +36,10 @@ const productos = [
         desc: "¿Cansado de rayar tus lentes o no saber dónde los dejaste? Cuídalos con estilo. ✨👓" },
     { id: 11, nombre: "Garaje Doble Hot Wheels Premium - Exhibidor con Portón", precio: 17.00, cat: "Colección", 
         img: ["Assets/Garaje doble para hot wheels 4.jpg", "Assets/Garaje doble para hot wheels 2.jpg", "Assets/Garaje doble para hot wheels 3.jpg", "Assets/Garaje doble para hot wheels 1.jpg"], 
-        desc: "¡Dale a tus mejores Hot Wheels un garaje de lujo con portón funcional! 🏎️ Garage Pro 3D." }
+        desc: "¡Dale a tus mejores Hot Wheels un garaje de lujo con portón funcional! 🏎️ Garage Pro 3D." },
+        { id: 12, nombre: "Organizador de Juegos PS5 - Torre de Discos Aesthetic", precio: 19.00, cat: "Gaming", 
+            img: ["Assets/Soporte Juego 1.jpg", "Assets/Soporte Juego 2.jpg", "Assets/Soporte Juego 3.jpg", "Assets/Soporte Juego 4.jpg"], 
+            desc: "¿Tus juegos de PS5 están tirados por todo el mueble? ¡Dales el lugar que se merecen con esta Torre de Discos Pro! 🎮🔵" }
 ];
 
 let productosFiltrados = [...productos];
