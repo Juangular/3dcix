@@ -14,7 +14,8 @@ const URL_API = "https://script.google.com/macros/s/AKfycbwvMpBZaHUWHQRGygDb-Q4o
 
 // Función para cargar los datos
 async function inicializarCatalogo() {
-    // 1. Mostramos el mensaje de carga inmediatamente
+    // ESTA ES LA PARTE CLAVE:
+    const contenedor = document.getElementById("catalogo");
     contenedor.innerHTML = `
         <div class="loader-container">
             <div class="spinner"></div>
@@ -27,12 +28,11 @@ async function inicializarCatalogo() {
         productos = await respuesta.json();
         productosFiltrados = [...productos];
         
-        // 2. Aquí el render() limpiará el loader y pondrá los productos automáticamente
         crearFiltros();
-        render();
+        render(); // Al llamar a render, el contenido del loader se borra automáticamente
     } catch (error) {
         console.error("Error al cargar:", error);
-        contenedor.innerHTML = '<p>Hubo un error al cargar los productos. Intenta recargar la página.</p>';
+        contenedor.innerHTML = '<p style="text-align:center;">Hubo un error al cargar. Por favor recarga la página.</p>';
     }
 }
 
