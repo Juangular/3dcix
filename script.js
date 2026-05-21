@@ -14,25 +14,27 @@ const URL_API = "https://script.google.com/macros/s/AKfycbwvMpBZaHUWHQRGygDb-Q4o
 
 // Función para cargar los datos
 async function inicializarCatalogo() {
-    // ESTA ES LA PARTE CLAVE:
     const contenedor = document.getElementById("catalogo");
-    contenedor.innerHTML = `
-        <div class="loader-container">
-            <div class="spinner"></div>
-            <p>Cargando los últimos diseños de 3DCIX...</p>
-        </div>
-    `;
+    
+    // 1. Mostrar cargando
+    contenedor.innerHTML = `<div class="loader-container"><div class="spinner"></div><p>Cargando...</p></div>`;
 
     try {
         const respuesta = await fetch(URL_API);
+        
+        // Verifica si la respuesta es exitosa
+        if (!respuesta.ok) throw new Error("Error en la red");
+        
         productos = await respuesta.json();
         productosFiltrados = [...productos];
         
+        // 2. Si todo sale bien, se renderiza
         crearFiltros();
-        render(); // Al llamar a render, el contenido del loader se borra automáticamente
+        render();
     } catch (error) {
-        console.error("Error al cargar:", error);
-        contenedor.innerHTML = '<p style="text-align:center;">Hubo un error al cargar. Por favor recarga la página.</p>';
+        console.error("Error:", error);
+        // 3. Solo si falla, mostramos el error
+        contenedor.innerHTML = '<p style="text-align:center;">Hubo un error al cargar los datos. Revisa que el script esté publicado con acceso "Cualquier persona".</p>';
     }
 }
 
