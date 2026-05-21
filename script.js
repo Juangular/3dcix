@@ -14,27 +14,16 @@ const URL_API = "https://script.google.com/macros/s/AKfycbwvMpBZaHUWHQRGygDb-Q4o
 
 // Función para cargar los datos
 async function inicializarCatalogo() {
-    const contenedor = document.getElementById("catalogo");
-    
-    // 1. Mostrar cargando
-    contenedor.innerHTML = `<div class="loader-container"><div class="spinner"></div><p>Cargando...</p></div>`;
-
     try {
         const respuesta = await fetch(URL_API);
-        
-        // Verifica si la respuesta es exitosa
-        if (!respuesta.ok) throw new Error("Error en la red");
-        
-        productos = await respuesta.json();
+        productos = await respuesta.json(); // Ahora los datos vienen de la nube
         productosFiltrados = [...productos];
         
-        // 2. Si todo sale bien, se renderiza
+        // Ejecutamos las funciones que ya tienes
         crearFiltros();
         render();
     } catch (error) {
-        console.error("Error:", error);
-        // 3. Solo si falla, mostramos el error
-        contenedor.innerHTML = '<p style="text-align:center;">Hubo un error al cargar los datos. Revisa que el script esté publicado con acceso "Cualquier persona".</p>';
+        console.error("No se pudieron cargar los productos:", error);
     }
 }
 
