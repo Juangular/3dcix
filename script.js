@@ -14,16 +14,25 @@ const URL_API = "https://script.google.com/macros/s/AKfycbwvMpBZaHUWHQRGygDb-Q4o
 
 // Función para cargar los datos
 async function inicializarCatalogo() {
+    // 1. Mostramos el mensaje de carga inmediatamente
+    contenedor.innerHTML = `
+        <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Cargando los últimos diseños de 3DCIX...</p>
+        </div>
+    `;
+
     try {
         const respuesta = await fetch(URL_API);
-        productos = await respuesta.json(); // Ahora los datos vienen de la nube
+        productos = await respuesta.json();
         productosFiltrados = [...productos];
         
-        // Ejecutamos las funciones que ya tienes
+        // 2. Aquí el render() limpiará el loader y pondrá los productos automáticamente
         crearFiltros();
         render();
     } catch (error) {
-        console.error("No se pudieron cargar los productos:", error);
+        console.error("Error al cargar:", error);
+        contenedor.innerHTML = '<p>Hubo un error al cargar los productos. Intenta recargar la página.</p>';
     }
 }
 

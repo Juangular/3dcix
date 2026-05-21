@@ -58,6 +58,24 @@ body { font-family: 'Inter', sans-serif; margin: 0; background: var(--gray-light
 .btn-pag { padding: 10px 25px; border: none; background: var(--bg-dark); color: white; border-radius: 10px; cursor: pointer; font-weight: 600; }
 .btn-pag:disabled { opacity: 0.3; }
 
+.loader-container {
+    width: 100%;
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
 /* --- RESPONSIVE DESIGN (NUEVO) --- */
 
 /* Tablets */
