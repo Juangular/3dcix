@@ -10,7 +10,7 @@ let paginaActual = 1;
 let categoriaActual = "Todos";
 
 // URL que te dio Google en el paso anterior
-const URL_API = "AKfycbwvMpBZaHUWHQRGygDb-Q4oZg0rw7wjRTMLFgwaBcps9ecztfX_u2q9FeNvxwfgKSWzug"; 
+const URL_API = "https://script.google.com/macros/s/AKfycbwvMpBZaHUWHQRGygDb-Q4oZg0rw7wjRTMLFgwaBcps9ecztfX_u2q9FeNvxwfgKSWzug/exec"; 
 
 // Función para cargar los datos
 async function inicializarCatalogo() {
