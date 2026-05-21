@@ -5,7 +5,7 @@ const CONFIG = {
 
 const productos = [
     { id: 1, nombre: "Organizador de Figuras Mundial 2026 - Caja Coleccionista", precio: 29.00, cat: "Futbol", 
-        img: ["Assets/Caja Coleccionista 1.png", "Assets/Caja Coleccionista 2.jpeg", "Assets/Caja Coleccionista 3.jpeg", "Assets/Caja Coleccionista 4.jpeg"], 
+        img: ["Assets/Caja Coleccionista 2.jpeg", "Assets/Caja Coleccionista 3.jpeg", "Assets/Caja Coleccionista 4.jpeg", "Assets/Caja Coleccionista 1.png"], 
         desc: "¿Cansado de que tus figuras del Mundial se doblen o se pierdan? ¡Protégelas como un verdadero campeón! ⚽🏆" },
     { id: 12, nombre: "Organizador de Juegos PS5 - Torre de Discos Aesthetic", precio: 19.00, cat: "Gaming", 
         img: ["Assets/Soporte Juego 1.jpg", "Assets/Soporte Juego 2.jpg", "Assets/Soporte Juego 3.jpg", "Assets/Soporte Juego 4.jpg"], 
