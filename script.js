@@ -3,7 +3,34 @@ const CONFIG = {
     itemsPorPagina: 10
 };
 
-const productos = [
+// Variable global para almacenar los productos que vienen de Google Sheets
+let productos = []; 
+let productosFiltrados = [];
+let paginaActual = 1;
+let categoriaActual = "Todos";
+
+// URL que te dio Google en el paso anterior
+const URL_API = "AKfycbwvMpBZaHUWHQRGygDb-Q4oZg0rw7wjRTMLFgwaBcps9ecztfX_u2q9FeNvxwfgKSWzug"; 
+
+// Función para cargar los datos
+async function inicializarCatalogo() {
+    try {
+        const respuesta = await fetch(URL_API);
+        productos = await respuesta.json(); // Ahora los datos vienen de la nube
+        productosFiltrados = [...productos];
+        
+        // Ejecutamos las funciones que ya tienes
+        crearFiltros();
+        render();
+    } catch (error) {
+        console.error("No se pudieron cargar los productos:", error);
+    }
+}
+
+// Llama a esta función al final de tu archivo en lugar de llamar a render() directamente
+inicializarCatalogo();
+
+/*const productos = [
     { id: 1, nombre: "Organizador de Figuras Mundial 2026 - Caja Coleccionista", precio: 29.00, cat: "Futbol", 
         img: ["Assets/Caja Coleccionista 2.jpeg", "Assets/Caja Coleccionista 3.jpeg", "Assets/Caja Coleccionista 4.jpeg", "Assets/Caja Coleccionista 1.png", "Assets/Caja Coleccionista 5.jpeg"], 
         desc: "¿Cansado de que tus figuras del Mundial se doblen o se pierdan? ¡Protégelas como un verdadero campeón! ⚽🏆" },
@@ -40,11 +67,11 @@ const productos = [
         { id: 12, nombre: "Organizador de Juegos PS5 - Torre de Discos Aesthetic", precio: 19.00, cat: "Gaming", 
             img: ["Assets/Soporte Juego 1.jpg", "Assets/Soporte Juego 2.jpg", "Assets/Soporte Juego 3.jpg", "Assets/Soporte Juego 4.jpg"], 
             desc: "¿Tus juegos de PS5 están tirados por todo el mueble? ¡Dales el lugar que se merecen con esta Torre de Discos Pro! 🎮🔵" }
-];
+];*/
 
-let productosFiltrados = [...productos];
-let paginaActual = 1;
-let categoriaActual = "Todos";
+//let productosFiltrados = [...productos];
+//let paginaActual = 1;
+//let categoriaActual = "Todos";
 
 const contenedor = document.getElementById("catalogo");
 const tagsContenedor = document.getElementById("categorias-tags");
