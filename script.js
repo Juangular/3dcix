@@ -1,7 +1,50 @@
 const CONFIG = {
     whatsapp: "51902245387",
-    itemsPorPagina: 10
+    itemsPorPagina: 10,
+    siteUrl: "https://juangular.github.io/3dcix"
 };
+
+function escAttr(str) {
+    return String(str).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
+function altImagenProducto(producto) {
+    return `${producto.nombre} — ${producto.cat} | Impresión 3D Lima 3DCIX`;
+}
+
+function actualizarSchemaProductos() {
+    const schemaEl = document.getElementById("schema-productos");
+    if (!schemaEl || productosFiltrados.length === 0) return;
+
+    const itemListElement = productosFiltrados.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+            "@type": "Product",
+            name: p.nombre,
+            description: p.desc,
+            category: p.cat,
+            image: p.img,
+            brand: { "@type": "Brand", name: "3DCIX" },
+            offers: {
+                "@type": "Offer",
+                price: p.precio.toFixed(2),
+                priceCurrency: "PEN",
+                availability: "https://schema.org/InStock",
+                url: `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent("Hola 3DCIX, estoy interesado en comprar el producto: " + p.nombre)}`,
+                seller: { "@type": "Organization", name: "3DCIX" }
+            }
+        }
+    }));
+
+    schemaEl.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "Catálogo de impresión 3D — 3DCIX Lima",
+        numberOfItems: productosFiltrados.length,
+        itemListElement
+    });
+}
 
 // Variable global para almacenar los productos que vienen de Google Sheets
 let productos = []; 
@@ -12,66 +55,31 @@ let categoriaActual = "Todos";
 // URL que te dio Google en el paso anterior
 const URL_API = "https://script.google.com/macros/s/AKfycbwvMpBZaHUWHQRGygDb-Q4oZg0rw7wjRTMLFgwaBcps9ecztfX_u2q9FeNvxwfgKSWzug/exec"; 
 
+const loader = document.getElementById("loader");
+
+function toggleLoader(visible) {
+    if (loader) loader.classList.toggle("hidden", !visible);
+}
+
 // Función para cargar los datos
 async function inicializarCatalogo() {
+    toggleLoader(true);
     try {
         const respuesta = await fetch(URL_API);
-        productos = await respuesta.json(); // Ahora los datos vienen de la nube
+        productos = await respuesta.json();
         productosFiltrados = [...productos];
-        
-        // Ejecutamos las funciones que ya tienes
         crearFiltros();
         render();
+        actualizarSchemaProductos();
     } catch (error) {
         console.error("No se pudieron cargar los productos:", error);
+    } finally {
+        toggleLoader(false);
     }
 }
 
 // Llama a esta función al final de tu archivo en lugar de llamar a render() directamente
 inicializarCatalogo();
-
-/*const productos = [
-    { id: 1, nombre: "Organizador de Figuras Mundial 2026 - Caja Coleccionista", precio: 29.00, cat: "Futbol", 
-        img: ["Assets/Caja Coleccionista 2.jpeg", "Assets/Caja Coleccionista 3.jpeg", "Assets/Caja Coleccionista 4.jpeg", "Assets/Caja Coleccionista 1.png", "Assets/Caja Coleccionista 5.jpeg"], 
-        desc: "¿Cansado de que tus figuras del Mundial se doblen o se pierdan? ¡Protégelas como un verdadero campeón! ⚽🏆" },
-    { id: 2, nombre: "Soporte Audífonos Sakura Aesthetic - Diseño Cerezo Japonés", precio: 33.00, cat: "Setup", 
-        img: ["Assets/Soporte audifono 4.jpg", "Assets/Soporte audifono 2.jpeg", "Assets/Soporte audifono 3.jpeg", "Assets/Soporte audifono 1.jpg"], 
-        desc: "¿Quieres el setup más lindo de Lima? Dale un toque Zen y Aesthetic a tu escritorio con el Soporte Sakura. 🌸✨" },
-    { id: 3, nombre: "Soporte Gamer 2 en 1 - Audífonos y Mando Pro", precio: 17.00, cat: "Gaming", 
-        img: ["Assets/Soporte 2 en 1 3.jpg", "Assets/Soporte 2 en 1 2.jpg", "Assets/Soporte 2 en 1 1.jpg"], 
-        desc: "¿Cansado del desorden en tu escritorio? Organiza tu Setup como un Pro con este soporte 2 en 1. 🎧🎮" },
-    { id: 4, nombre: "Cactus Love Aesthetic - Decoració Tejida 3D", precio: 25.00, cat: "Detalles", 
-        img: ["Assets/Captus love 4.jpg", "Assets/Captus love 2.jpg", "Assets/Captus love 3.jpg", "Assets/Captus love 1.jpg", "Assets/Captus love 5.jpg"], 
-        desc: "¿Buscas un detalle único que dure para siempre? Regala un Cactus Love que nunca se marchita. 🌵💚" },
-    { id: 5, nombre: "Exhibidor Hot Wheels Garage - Logo Multicolor", precio: 29.00, cat: "Colección", 
-        img: ["Assets/Garaje hot wheels 1.jpg", "Assets/Garaje hot wheels 2.jpg", "Assets/Garaje hot wheels 3.jpg", "Assets/Garaje hot wheels 4.jpg"], 
-        desc: "¿Tus Hot Wheels favoritos siguen en una caja? ¡Dales el garaje que se merecen! 🏎️🔥" },
-    { id: 6, nombre: "Organizador Joyas Aesthetic Premium - Porta Collares y Anillos", precio: 35.00, cat: "Hogar", 
-        img: ["Assets/Soporte joyas 3.jpg", "Assets/Soporte joyas 2.jpg", "Assets/Soporte joyas 1.jpg", "Assets/Soporte joyas 4.png"], 
-        desc: "¿Cansada de que tus collares se enreden? Dale a tus joyas el lugar que merecen con este organizador de diseño minimalista. ✨" },
-    { id: 7, nombre: "Ajedrez Minimalista Premium - Diseño Plegable y Portátil", precio: 27.00, cat: "Colección", 
-        img: ["Assets/Ajedrez minimalista 1.jpg", "Assets/Ajedrez minimalista 2.jpg", "Assets/Ajedrez minimalista 3.jpg"], 
-        desc: "¿Buscas un ajedrez que combine con tu estilo? Redescubre el juego ciencia con este diseño minimalista y portátil. ♟️✨" },
-    { id: 8, nombre: "Soporte Vertical Laptop - Ahorra Espacio Setup Pro", precio: 20.00, cat: "Setup", 
-        img: ["Assets/Soporte laptop 1.jpg", "Assets/Soporte laptop 2.jpg", "Assets/Soporte laptop 3.jpg", "Assets/Soporte laptop 4.jpg", "Assets/Soporte laptop 5.jpg", "Assets/Soporte laptop 6.jpg"], 
-        desc: "¿Escritorio lleno? Recupera tu espacio de trabajo con el Soporte Vertical Pro. 💻🚀" },
-    { id: 9, nombre: "Poké Balance Challenge - Juguete de Equilibrio", precio: 86.00, cat: "Colección", 
-        img: ["Assets/Juego pokemon 5.jpeg", "Assets/Juego pokemon 2.jpeg", "Assets/Juego pokemon 3.jpeg", "Assets/Juego pokemon 4.jpeg", "Assets/Juego pokemon 1.jpeg", "Assets/Juego pokemon 6.jpeg", "Assets/Juego pokemon 7.jpeg", "Assets/Juego pokemon 8.jpeg"], 
-        desc: "¿Tienes buen equilibrio? ¡Acepta el reto Poké Balance y demuestra tus habilidades! 🔴⚪" },
-    { id: 10, nombre: "Soporte Lentes Minimalista - Organizador Escultórico", precio: 29.00, cat: "Setup", 
-        img: ["Assets/Soporte lentes 1.jpg", "Assets/Soporte lentes 2.jpg", "Assets/Soporte lentes 3.jpg"], 
-        desc: "¿Cansado de rayar tus lentes o no saber dónde los dejaste? Cuídalos con estilo. ✨👓" },
-    { id: 11, nombre: "Garaje Doble Hot Wheels Premium - Exhibidor con Portón", precio: 17.00, cat: "Colección", 
-        img: ["Assets/Garaje doble para hot wheels 4.jpg", "Assets/Garaje doble para hot wheels 2.jpg", "Assets/Garaje doble para hot wheels 3.jpg", "Assets/Garaje doble para hot wheels 1.jpg"], 
-        desc: "¡Dale a tus mejores Hot Wheels un garaje de lujo con portón funcional! 🏎️ Garage Pro 3D." },
-        { id: 12, nombre: "Organizador de Juegos PS5 - Torre de Discos Aesthetic", precio: 19.00, cat: "Gaming", 
-            img: ["Assets/Soporte Juego 1.jpg", "Assets/Soporte Juego 2.jpg", "Assets/Soporte Juego 3.jpg", "Assets/Soporte Juego 4.jpg"], 
-            desc: "¿Tus juegos de PS5 están tirados por todo el mueble? ¡Dales el lugar que se merecen con esta Torre de Discos Pro! 🎮🔵" }
-];*/
-
-//let productosFiltrados = [...productos];
-//let paginaActual = 1;
-//let categoriaActual = "Todos";
 
 const contenedor = document.getElementById("catalogo");
 const tagsContenedor = document.getElementById("categorias-tags");
@@ -89,6 +97,7 @@ function filtrar(cat) {
     productosFiltrados = cat === "Todos" ? [...productos] : productos.filter(p => p.cat === cat);
     crearFiltros();
     render();
+    actualizarSchemaProductos();
 }
 
 function render() {
@@ -101,20 +110,27 @@ function render() {
         
         const tarjeta = document.createElement("article");
         tarjeta.className = "tarjeta-producto";
+        tarjeta.setAttribute("itemscope", "");
+        tarjeta.setAttribute("itemtype", "https://schema.org/Product");
+        const altTexto = escAttr(altImagenProducto(p));
         tarjeta.innerHTML = `
             <div class="carrusel">
-                ${p.img.map((img, i) => `<img src="${img}" class="${i===0?'activa':''}" alt="${p.nombre}">`).join('')}
+                ${p.img.map((img, i) => `<img src="${img}" class="${i===0?'activa':''}" alt="${altTexto}" itemprop="image" ${i > 0 ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async">`).join('')}
                 ${p.img.length > 1 ? `
-                    <button class="btn-carrusel btn-prev" onclick="cambiarImg(this, -1)">❮</button>
-                    <button class="btn-carrusel btn-next" onclick="cambiarImg(this, 1)">❯</button>
+                    <button class="btn-carrusel btn-prev" onclick="cambiarImg(this, -1)" aria-label="Imagen anterior de ${escAttr(p.nombre)}">❮</button>
+                    <button class="btn-carrusel btn-next" onclick="cambiarImg(this, 1)" aria-label="Imagen siguiente de ${escAttr(p.nombre)}">❯</button>
                 ` : ''}
             </div>
             <div class="info-producto">
-                <span class="categoria-label">${p.cat}</span>
-                <h2>${p.nombre}</h2>
-                <p style="font-size:0.9rem; color:var(--text-muted);">${p.desc}</p>
-                <div class="precio">S/ ${p.precio.toFixed(2)}</div>
-                <a href="${urlWa}" target="_blank" class="boton-comprar">Comprar desde WhatsApp</a>
+                <span class="categoria-label" itemprop="category">${p.cat}</span>
+                <h2 itemprop="name">${p.nombre}</h2>
+                <p class="desc-producto" itemprop="description">${p.desc}</p>
+                <div class="precio" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                    <meta itemprop="priceCurrency" content="PEN">
+                    <span itemprop="price" content="${p.precio.toFixed(2)}">S/ ${p.precio.toFixed(2)}</span>
+                    <link itemprop="availability" href="https://schema.org/InStock">
+                </div>
+                <a href="${urlWa}" target="_blank" rel="noopener" class="boton-comprar">Comprar desde WhatsApp</a>
             </div>
         `;
         contenedor.appendChild(tarjeta);
@@ -129,8 +145,14 @@ function actualizarPaginacion() {
     document.getElementById("btn-next-page").disabled = paginaActual === totalPaginas || totalPaginas === 0;
 }
 
-document.getElementById("btn-prev-page").onclick = () => { paginaActual--; render(); window.scrollTo(0, 400); };
-document.getElementById("btn-next-page").onclick = () => { paginaActual++; render(); window.scrollTo(0, 400); };
+const catalogoSection = document.getElementById("catalogo-section");
+
+function scrollToCatalogo() {
+    catalogoSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+document.getElementById("btn-prev-page").onclick = () => { paginaActual--; render(); scrollToCatalogo(); };
+document.getElementById("btn-next-page").onclick = () => { paginaActual++; render(); scrollToCatalogo(); };
 
 window.cambiarImg = (btn, dir) => {
     const carrusel = btn.parentElement;
@@ -140,6 +162,3 @@ window.cambiarImg = (btn, dir) => {
     let next = (act + dir + imgs.length) % imgs.length;
     imgs[next].classList.add('activa');
 };
-
-crearFiltros();
-render();

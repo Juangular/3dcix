@@ -1,67 +1,398 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-PE">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impresión 3D en Lima | Prototipado y Modelos 3DCIX</title>
-    <link rel="shortcut icon" href="Assets/Logo 3dcix.png">
-    <meta name="description" content="3DCIX: Servicio profesional de impresión 3D en Lince, Lima. Fabricación de piezas funcionales, soportes y figuras personalizadas con tecnología de vanguardia.">
-    <meta name="keywords" content="impresion 3d lima, 3dcix lince, prototipado 3d peru, piezas 3d personalizadas">
-    
+    <title>Impresión 3D en Lima | 3DCIX — Prototipado y Piezas Personalizadas</title>
+    <meta name="description" content="Impresión 3D profesional en Lince, Lima. Prototipado rápido, piezas funcionales y figuras personalizadas en PLA, PETG y ABS. Cotiza por WhatsApp con entrega en 48h.">
+    <meta name="keywords" content="impresión 3d lima, impresion 3d lince, prototipado 3d peru, piezas 3d personalizadas, servicio impresión 3d lima, 3dcix, figuras 3d lima, impresora 3d lima">
+    <meta name="author" content="3DCIX">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="geo.region" content="PE-LIM">
+    <meta name="geo.placename" content="Lince, Lima, Perú">
+    <meta name="geo.position" content="-12.088628;-77.0287474">
+    <meta name="ICBM" content="-12.088628, -77.0287474">
+    <link rel="canonical" href="https://juangular.github.io/3dcix/">
+    <link rel="alternate" hreflang="es-pe" href="https://juangular.github.io/3dcix/">
+    <link rel="alternate" hreflang="x-default" href="https://juangular.github.io/3dcix/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_PE">
+    <meta property="og:site_name" content="3DCIX">
+    <meta property="og:title" content="Impresión 3D en Lima | 3DCIX — Prototipado y Piezas Personalizadas">
+    <meta property="og:description" content="Servicio de impresión 3D en Lince, Lima. Prototipado, piezas funcionales y figuras personalizadas. Cotiza por WhatsApp.">
+    <meta property="og:url" content="https://juangular.github.io/3dcix/">
+    <meta property="og:image" content="https://juangular.github.io/3dcix/Assets/Logo%203dcix.png">
+    <meta property="og:image:alt" content="Logo 3DCIX - Impresión 3D en Lima">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Impresión 3D en Lima | 3DCIX">
+    <meta name="twitter:description" content="Prototipado y piezas personalizadas en Lince, Lima. Cotiza por WhatsApp con entrega express.">
+    <meta name="twitter:image" content="https://juangular.github.io/3dcix/Assets/Logo%203dcix.png">
+
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" href="Assets/Logo 3dcix.png" type="image/png">
+    <link rel="apple-touch-icon" href="Assets/Logo 3dcix.png">
+
+    <!-- Datos estructurados: negocio local + sitio web + FAQ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://juangular.github.io/3dcix/#website",
+                "url": "https://juangular.github.io/3dcix/",
+                "name": "3DCIX",
+                "description": "Servicio profesional de impresión 3D en Lince, Lima, Perú.",
+                "inLanguage": "es-PE",
+                "publisher": { "@id": "https://juangular.github.io/3dcix/#organization" }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://juangular.github.io/3dcix/#organization",
+                "name": "3DCIX",
+                "url": "https://juangular.github.io/3dcix/",
+                "logo": "https://juangular.github.io/3dcix/Assets/Logo%203dcix.png",
+                "email": "enginautchiclayo@gmail.com",
+                "telephone": "+51902245387",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Av. Francisco Masías 2641",
+                    "addressLocality": "Lince",
+                    "addressRegion": "Lima",
+                    "postalCode": "15046",
+                    "addressCountry": "PE"
+                }
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "https://juangular.github.io/3dcix/#localbusiness",
+                "name": "3DCIX — Impresión 3D en Lima",
+                "description": "Impresión 3D profesional, prototipado rápido y fabricación de piezas personalizadas en Lince, Lima.",
+                "url": "https://juangular.github.io/3dcix/",
+                "telephone": "+51902245387",
+                "email": "enginautchiclayo@gmail.com",
+                "image": "https://juangular.github.io/3dcix/Assets/Logo%203dcix.png",
+                "priceRange": "$$",
+                "currenciesAccepted": "PEN",
+                "paymentAccepted": "Efectivo, Transferencia, Yape, Plin",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Av. Francisco Masías 2641",
+                    "addressLocality": "Lince",
+                    "addressRegion": "Lima",
+                    "postalCode": "15046",
+                    "addressCountry": "PE"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -12.088628,
+                    "longitude": -77.0287474
+                },
+                "openingHoursSpecification": [
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                        "opens": "09:00",
+                        "closes": "18:00"
+                    },
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": "Saturday",
+                        "opens": "10:00",
+                        "closes": "14:00"
+                    }
+                ],
+                "areaServed": {
+                    "@type": "City",
+                    "name": "Lima",
+                    "containedInPlace": { "@type": "Country", "name": "Perú" }
+                },
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Catálogo de productos 3D",
+                    "itemListElement": []
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://juangular.github.io/3dcix/#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "¿Dónde está ubicado el servicio de impresión 3D 3DCIX?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "3DCIX está ubicado en Av. Francisco Masías 2641, Lince, Lima, Perú. Atendemos clientes de Lima Metropolitana y envíos a todo el Perú."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿Qué materiales usan para imprimir en 3D?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Trabajamos con PLA, PETG, ABS y otros materiales según el uso de la pieza. Te asesoramos para elegir el material ideal según resistencia, acabado y presupuesto."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿Cuánto demora una impresión 3D en Lima?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "El tiempo depende del tamaño y complejidad del modelo. Ofrecemos entrega express en 48 horas para proyectos estándar. Cotiza por WhatsApp al +51 902 245 387."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿Puedo enviar mi propio archivo STL u OBJ?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Sí. Puedes enviarnos tu archivo STL u OBJ por WhatsApp y te cotizamos sin compromiso. También podemos ayudarte a modelar tu diseño desde cero."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿Cómo compro un producto del catálogo?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Explora el catálogo en nuestra web, elige el producto y haz clic en Comprar desde WhatsApp. Te atenderemos directamente para confirmar pedido, pago y entrega."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+    <nav class="navbar" aria-label="Navegación principal">
+        <div class="navbar-inner">
+            <a href="https://juangular.github.io/3dcix/" class="navbar-brand" aria-label="3DCIX — Inicio">
+                <span class="brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" fill="none"><path d="M16 2L28 9v14L16 30 4 23V9L16 2z" stroke="currentColor" stroke-width="1.5"/><path d="M16 2v28M4 9l12 7 12-7M4 23l12-7 12 7" stroke="currentColor" stroke-width="1.5" opacity="0.5"/></svg>
+                </span>
+                <span class="brand-text">3DCIX</span>
+            </a>
+            <div class="navbar-links">
+                <a href="#catalogo-section">Catálogo</a>
+                <a href="#beneficios">Servicios</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <a href="https://wa.me/51902245387?text=Hola%203DCIX,%20me%20interesa%20sus%20servicios%20de%20impresión%203D" target="_blank" rel="noopener" class="btn-navbar">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Escríbenos
+            </a>
+        </div>
+    </nav>
+
+    <main id="contenido-principal">
     <header class="hero">
+        <div class="hero-bg" aria-hidden="true">
+            <div class="hero-grid"></div>
+            <div class="hero-glow hero-glow--1"></div>
+            <div class="hero-glow hero-glow--2"></div>
+        </div>
         <div class="hero-content">
-            <h1 class="logo">3DCIX</h1>
-            <p class="subtitle">Servicio Profesional de Impresión 3D en Lima</p>
-            <p class="description-hero">Materializamos tus ideas con precisión milimétrica. Piezas funcionales, prototipos y diseños exclusivos.</p>
+            <span class="hero-badge">Impresión 3D · Lince, Lima, Perú</span>
+            <h1 class="logo">Impresión 3D en Lima: materializa tus ideas en <span class="text-gradient">3D</span></h1>
+            <p class="subtitle">Servicio profesional de impresión 3D en Lince, prototipado rápido y piezas personalizadas con precisión milimétrica. Cotiza por WhatsApp.</p>
+            <div class="hero-actions">
+                <a href="#catalogo-section" class="btn-primary">Ver catálogo</a>
+                <a href="https://wa.me/51902245387?text=Hola%203DCIX,%20quiero%20un%20presupuesto%20personalizado" target="_blank" rel="noopener" class="btn-secondary">Pedir presupuesto</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <strong>+500</strong>
+                    <span>Piezas impresas</span>
+                </div>
+                <div class="stat-divider" aria-hidden="true"></div>
+                <div class="stat">
+                    <strong>48h</strong>
+                    <span>Entrega express</span>
+                </div>
+                <div class="stat-divider" aria-hidden="true"></div>
+                <div class="stat">
+                    <strong>100%</strong>
+                    <span>Personalizado</span>
+                </div>
+            </div>
         </div>
     </header>
 
-    <section class="filtro-container">
-        <div id="categorias-tags" class="tags"></div>
+    <section id="beneficios" class="beneficios">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">Por qué 3DCIX</span>
+                <h2>Servicio de impresión 3D profesional en Lima</h2>
+                <p>Desde prototipos funcionales hasta figuras decorativas, en 3DCIX fabricamos piezas 3D personalizadas con los más altos estándares de calidad en Lince, Lima.</p>
+            </div>
+            <div class="beneficios-grid">
+                <article class="beneficio-card">
+                    <div class="beneficio-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Alta precisión</h3>
+                    <p>Capas finas y acabados detallados para piezas funcionales y modelos de exhibición.</p>
+                </article>
+                <article class="beneficio-card">
+                    <div class="beneficio-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h3>Entrega rápida</h3>
+                    <p>Producción ágil con opciones express para que no detengas tu proyecto.</p>
+                </article>
+                <article class="beneficio-card">
+                    <div class="beneficio-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                    </div>
+                    <h3>Materiales variados</h3>
+                    <p>PLA, PETG, ABS y más. Te asesoramos para elegir el material ideal.</p>
+                </article>
+            </div>
+        </div>
     </section>
 
-    <main id="catalogo" class="contenedor-grid"></main>
+    <section id="catalogo-section" class="catalogo-section">
+        <div class="section-inner">
+            <div class="section-header section-header--left">
+                <span class="section-label">Catálogo</span>
+                <h2>Catálogo de impresión 3D — productos disponibles</h2>
+                <p>Explora figuras, organizadores, trofeos y más productos impresos en 3D. Compra directamente por WhatsApp con un solo clic.</p>
+            </div>
 
-    <nav class="paginacion">
-        <button id="btn-prev-page" class="btn-pag">Anterior</button>
-        <span id="info-página">Página 1 de 2</span>
-        <button id="btn-next-page" class="btn-pag">Siguiente</button>
-    </nav>
+            <div class="filtro-container">
+                <div id="categorias-tags" class="tags" role="tablist" aria-label="Filtrar por categoría"></div>
+            </div>
 
-    <footer class="footer">
+            <div id="loader" class="loader" aria-live="polite" aria-busy="true">
+                <div class="loader-spinner"></div>
+                <p>Cargando productos…</p>
+            </div>
+
+            <div id="catalogo" class="contenedor-grid" role="list" aria-label="Listado de productos de impresión 3D"></div>
+
+            <nav class="paginacion" aria-label="Paginación del catálogo">
+                <button id="btn-prev-page" class="btn-pag" aria-label="Página anterior">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                    Anterior
+                </button>
+                <span id="info-página" class="paginacion-info">Página 1 de 1</span>
+                <button id="btn-next-page" class="btn-pag" aria-label="Página siguiente">
+                    Siguiente
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </nav>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <div class="cta-banner-inner">
+            <div class="cta-banner-text">
+                <h2>¿Tienes un diseño propio?</h2>
+                <p>Envíanos tu archivo STL u OBJ y te cotizamos sin compromiso. También podemos ayudarte a modelar tu idea desde cero.</p>
+            </div>
+            <a href="https://wa.me/51902245387?text=Hola%203DCIX,%20tengo%20un%20diseño%20personalizado%20para%20imprimir" target="_blank" rel="noopener" class="btn-primary btn-primary--light">
+                Cotizar diseño personalizado
+            </a>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-label">Preguntas frecuentes</span>
+                <h2>Todo sobre impresión 3D en Lima</h2>
+                <p>Resolvemos las dudas más comunes sobre nuestro servicio de impresión 3D en Lince.</p>
+            </div>
+            <div class="faq-list">
+                <details class="faq-item" open>
+                    <summary>¿Dónde está ubicado 3DCIX?</summary>
+                    <p>Estamos en <strong>Av. Francisco Masías 2641, Lince, Lima</strong>. Atendemos clientes de Lima Metropolitana y realizamos envíos a todo el Perú.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Qué materiales usan para imprimir en 3D?</summary>
+                    <p>Trabajamos con <strong>PLA, PETG, ABS</strong> y otros materiales. Te asesoramos según la resistencia, el acabado y el uso final de tu pieza.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Cuánto demora una impresión 3D?</summary>
+                    <p>Depende del tamaño y complejidad del modelo. Ofrecemos <strong>entrega express en 48 horas</strong> para proyectos estándar. Escríbenos al <a href="https://wa.me/51902245387">+51 902 245 387</a>.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Puedo enviar mi propio archivo STL u OBJ?</summary>
+                    <p>Sí. Envíanos tu archivo por WhatsApp y te cotizamos sin compromiso. También podemos ayudarte a <strong>modelar tu diseño desde cero</strong>.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>¿Cómo compro un producto del catálogo?</summary>
+                    <p>Elige el producto, haz clic en <strong>Comprar desde WhatsApp</strong> y te atenderemos para confirmar pedido, pago y entrega.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer id="contacto" class="footer">
         <div class="footer-grid">
             <div class="footer-seccion">
-                <h3>3DCIX</h3>
-                <p>Líderes en impresión 3D profesional y soluciones creativas.</p>
+                <h3 class="footer-brand">3DCIX</h3>
+                <p class="footer-desc">Líderes en impresión 3D profesional en Lince, Lima. Prototipado, piezas funcionales y figuras personalizadas con entrega en todo el Perú.</p>
                 <div class="mapa-contenedor">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.442848834418!2d-77.0287474!3d-12.088628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c862f990f1db%3A0x7d066601f705e4a5!2sAv.%20Francisco%20Mas%C3%ADas%202641%2C%20Lince%2015046!5e0!3m2!1ses!2spe!4v1710000000000" width="100%" height="150" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe title="Ubicación de 3DCIX en Google Maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.442848834418!2d-77.0287474!3d-12.088628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c862f990f1db%3A0x7d066601f705e4a5!2sAv.%20Francisco%20Mas%C3%ADas%202641%2C%20Lince%2015046!5e0!3m2!1ses!2spe!4v1710000000000" width="100%" height="160" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
             <div class="footer-seccion">
                 <h3>Contacto</h3>
-                <p>📍 Lince: Av. Francisco Masias 2641, Lima</p>
-                <p>📞 +51 902 245 387</p>
-                <p>✉️ enginautchiclayo@gmail.com</p>
+                <ul class="footer-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Av. Francisco Masías 2641, Lince, Lima
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        <a href="tel:+51902245387">+51 902 245 387</a>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <a href="mailto:enginautchiclayo@gmail.com">enginautchiclayo@gmail.com</a>
+                    </li>
+                </ul>
             </div>
             <div class="footer-seccion">
-                <h3>Horarios de Atención</h3>
-                <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                <p>Sábados: 10:00 AM - 2:00 PM</p>
-                <p>Domingos: Cerrado</p>
+                <h3>Horarios</h3>
+                <ul class="footer-horarios">
+                    <li><span>Lunes – Viernes</span><strong>9:00 – 18:00</strong></li>
+                    <li><span>Sábados</span><strong>10:00 – 14:00</strong></li>
+                    <li><span>Domingos</span><strong>Cerrado</strong></li>
+                </ul>
             </div>
         </div>
         <div class="footer-copy">
-            © 2026 3DCIX - Todos los derechos reservados.
+            © 2026 3DCIX — Todos los derechos reservados.
         </div>
     </footer>
 
+    <a href="https://wa.me/51902245387?text=Hola%203DCIX,%20me%20interesa%20sus%20servicios%20de%20impresión%203D" target="_blank" rel="noopener" class="fab-whatsapp" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script id="schema-productos" type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[]}</script>
+    <noscript>
+        <div class="noscript-seo">
+            <h2>3DCIX — Impresión 3D en Lince, Lima</h2>
+            <p>Servicio de impresión 3D, prototipado y piezas personalizadas en Lima, Perú. Av. Francisco Masías 2641, Lince. Tel: +51 902 245 387.</p>
+            <p>Visita nuestro catálogo de productos impresos en 3D: figuras, organizadores, trofeos y más. Contáctanos por WhatsApp para cotizar.</p>
+        </div>
+    </noscript>
     <script src="script.js"></script>
 </body>
 </html>
