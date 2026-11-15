@@ -9,6 +9,10 @@ Web de catálogo de productos impresos en 3D, con atención y cierre de pedidos 
 
 ## Documentación
 
+El build genera fichas HTML y sitemap desde el catálogo público. Tras modificar
+productos en Sheets, vuelve a construir y desplegar para actualizar su contenido
+SEO. Detalles y validación: [docs/seo.md](docs/seo.md).
+
 Empieza en [docs/README.md](docs/README.md). El contexto confirmado del negocio está
 en [PRODUCT.md](PRODUCT.md); el alcance, arquitectura y fases en [docs/plan.md](docs/plan.md).
 
@@ -31,5 +35,5 @@ python3 -m http.server 4189 --directory dist --bind 127.0.0.1
 
 El build copia únicamente archivos públicos a `dist/`; Vercel utiliza esa salida
 mediante `vercel.json`. Documentación, Apps Script, tests y skills no se publican.
-El sitemap y canonical principal apuntan a Vercel; la ficha dinámica es `noindex`
-hasta contar con páginas de producto que no dependan de JavaScript para sus metadatos.
+El sitemap y los canonical apuntan a Vercel. El build genera fichas indexables en
+`/productos/p-ID/`; la plantilla dinámica genérica conserva `noindex`.

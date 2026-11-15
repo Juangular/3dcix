@@ -95,6 +95,11 @@ Apps Script no recibe pedidos ni ofrece escritura pública.
   sociales por producto ni indexación independiente. Páginas prerenderizadas
   serían una mejora posterior, con sincronización y compilación explícitas.
 
+Actualización SEO local del 15 de noviembre de 2026: el build consulta y valida
+el catálogo público para generar `/productos/p-ID/`, contenido inicial, metadatos
+y sitemap. La UI sigue revalidando contra la API. Sheets requiere reconstruir y
+desplegar para actualizar el HTML indexable; ver `seo.md`. Pendiente de publicación.
+
 ## Decisiones y cuestiones abiertas
 
 | ID | Decisión | Estado |

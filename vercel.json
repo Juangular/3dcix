@@ -1,4 +1,11 @@
 {
   "buildCommand": "node tools/build.cjs",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/productos/:slug/", "destination": "/producto.html" }
+  ]
 }

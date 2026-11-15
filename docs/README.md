@@ -21,6 +21,8 @@ Los cambios locales recientes de skills/documentación aún no están en Git.
 
 ## Cómo mantener los documentos
 
+- [`seo.md`](seo.md): fichas estáticas, sitemap, actualización desde Sheets y validación SEO.
+
 - Los hechos confirmados del negocio viven en `PRODUCT.md`, no en múltiples copias.
 - `AGENTS.md` y [`skills.md`](skills.md) indican cómo seleccionar y aplicar las skills.
 - Una propuesta no es una decisión del usuario. Registrar su aprobación o cambio

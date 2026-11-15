@@ -5,7 +5,7 @@ const CONFIG = {
     itemsPorPagina: 10,
     siteUrl: "https://3dcix.vercel.app",
     // API de lectura con publicación explícita y campos normalizados.
-    catalogoUrl: "https://script.google.com/macros/s/AKfycbzVDJLe8FpPEpR6Cl_1pmYGDy_k5aa7eJaZcPLpc27PNoCzguwnCH-CbpClMbRpcU24gg/exec"
+    catalogoUrl: CatalogoSEO.catalogoUrl
 };
 
 let productos = [];
@@ -38,24 +38,8 @@ function mostrarAviso(texto, permiteReintento = false) {
 }
 
 function actualizarSchemaProductos() {
-    const schema = {
-        "@context": "https://schema.org", "@type": "ItemList",
-        name: "Catálogo de productos 3DCIX", numberOfItems: productosFiltrados.length,
-        itemListElement: productosFiltrados.map((p, i) => {
-            const offer = {
-                "@type": "Offer", price: p.precio.toFixed(2), priceCurrency: "PEN",
-                url: `${CONFIG.siteUrl}/#catalogo-section`,
-                seller: { "@type": "Organization", name: "3DCIX" }
-            };
-            // Stock desconocido no se convierte en InStock ni en fabricación confirmada.
-            if (p.stock !== null) offer.availability = p.stock > 0
-                ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
-            const item = { "@type": "Product", name: p.nombre, description: p.desc,
-                category: p.cat, brand: { "@type": "Brand", name: "3DCIX" }, offers: offer };
-            if (p.img.length) item.image = p.img.map(src => new URL(src, `${CONFIG.siteUrl}/`).href);
-            return { "@type": "ListItem", position: i + 1, item };
-        })
-    };
+    const inicio = (paginaActual - 1) * CONFIG.itemsPorPagina;
+    const schema = CatalogoSEO.lista(productosFiltrados.slice(inicio, inicio + CONFIG.itemsPorPagina));
     document.getElementById("schema-productos").textContent = JSON.stringify(schema);
 }
 
@@ -220,8 +204,7 @@ function render() {
         info.append(nodo("p", "foto-origen", p.foto_tipo === "real" ? "Fotografía del producto."
             : p.foto_tipo === "referencia" ? "Imagen de referencia." : "Origen de la fotografía por confirmar."));
         const enlace = nodo("a", "boton-comprar", "Ver producto");
-        const detalle = new URL("producto.html", location.href);
-        detalle.searchParams.set("id", p.id);
+        const detalle = new URL(CatalogoSEO.ruta(p.id), location.href);
         const regreso = new URLSearchParams(location.search);
         ["q", "categoria", "pagina"].forEach(key => {
             if (regreso.has(key)) detalle.searchParams.set(key, regreso.get(key));

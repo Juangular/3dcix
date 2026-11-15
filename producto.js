@@ -1,19 +1,33 @@
 "use strict";
 
-const CATALOGO_URL = "https://script.google.com/macros/s/AKfycbzVDJLe8FpPEpR6Cl_1pmYGDy_k5aa7eJaZcPLpc27PNoCzguwnCH-CbpClMbRpcU24gg/exec";
+const CATALOGO_URL = CatalogoSEO.catalogoUrl;
 const moneda = new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" });
 const estado = document.getElementById("producto-estado");
 const contenedor = document.getElementById("producto");
 const regreso = new URLSearchParams();
 const parametros = new URLSearchParams(location.search);
+const rutaId = location.pathname.match(/^\/productos\/p-([^/]+)\/?$/);
+let idProducto = parametros.get("id");
+try { if (rutaId) idProducto = decodeURIComponent(rutaId[1]); } catch (_) { idProducto = null; }
 ["q", "categoria", "pagina"].forEach(key => {
     if (parametros.has(key)) regreso.set(key, parametros.get(key));
 });
-document.querySelector(".back-link").href = `./${regreso.size ? `?${regreso}` : ""}#catalogo-section`;
+document.querySelector(".back-link").href = `/${regreso.size ? `?${regreso}` : ""}#catalogo-section`;
 const crear = (tag, clase, texto) => { const e = document.createElement(tag); if (clase) e.className = clase; if (texto !== undefined) e.textContent = texto; return e; };
 
 function mostrarProducto(p) {
     document.title = `${p.nombre} | 3DCIX`;
+    document.querySelector('meta[name="description"]').content = CatalogoSEO.descripcion(p);
+    let schema = document.getElementById("schema-producto");
+    if (!schema && document.querySelector('link[rel="canonical"]')) {
+        schema = crear("script"); schema.id = "schema-producto"; schema.type = "application/ld+json";
+        document.head.append(schema);
+    }
+    if (schema) schema.textContent = JSON.stringify(CatalogoSEO.producto(p));
+    for (const [campo, valor] of [["og:title", document.title], ["og:description", CatalogoSEO.descripcion(p)]]) {
+        const meta = document.querySelector(`meta[property="${campo}"]`);
+        if (meta) meta.content = valor;
+    }
     const galeria = crear("div", "product-gallery");
     const marco = crear("div", "carrusel");
     const fallback = crear("p", "foto-no-disponible", "Fotografía no disponible. Solicítala por WhatsApp.");
@@ -100,15 +114,24 @@ function mostrarProducto(p) {
 }
 
 async function cargarProducto() {
-    const id = new URLSearchParams(location.search).get("id");
+    const id = idProducto;
     if (!id) { estado.textContent = "No se indicó un producto. Vuelve al catálogo para elegir uno."; return; }
     try {
         const { productos } = await CatalogoDatos.cargar(CATALOGO_URL);
         const producto = productos.find(p => p.id === id);
-        if (!producto) { estado.textContent = "Este producto no está disponible. Vuelve al catálogo para ver los productos publicados."; return; }
+        if (!producto) {
+            document.querySelector('meta[name="robots"]').content = "noindex,follow";
+            document.getElementById("schema-producto")?.remove();
+            contenedor.hidden = true; estado.hidden = false;
+            estado.textContent = "Este producto no está disponible. Vuelve al catálogo para ver los productos publicados."; return;
+        }
         mostrarProducto(producto);
     } catch (_) {
-        estado.replaceChildren(document.createTextNode("No pudimos cargar el producto. "));
+        // La ficha estática conserva los datos del último build, pero sin oferta indexable obsoleta.
+        document.getElementById("schema-producto")?.remove();
+        estado.hidden = false;
+        estado.replaceChildren(document.createTextNode(contenedor.hidden ? "No pudimos cargar el producto. "
+            : "No pudimos actualizar el producto. Estos datos corresponden a la última publicación; confirma precio y disponibilidad por WhatsApp. "));
         const reintentar = crear("button", "btn-outline", "Volver a intentar"); reintentar.type = "button";
         reintentar.addEventListener("click", () => { estado.textContent = "Cargando producto…"; cargarProducto(); }); estado.append(reintentar);
     }
