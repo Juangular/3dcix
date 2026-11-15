@@ -1,6 +1,6 @@
 # Fase 3: Mi pedido
 
-Implementada localmente. La ficha permite agregar una o varias unidades de cada
+Implementada en producción (`b93bdac`). La ficha permite agregar una o varias unidades de cada
 color y conserva la consulta directa por WhatsApp. Mi pedido permite editar color
 y cantidad, retirar una línea y deshacer la última eliminación.
 
@@ -46,5 +46,5 @@ automáticamente; se ofrece borrarlo de forma explícita.
 
 ## Para continuar
 
-La preview se verificó con catálogo real; detalles y pendientes en `lanzamiento.md`.
-No se ha realizado commit, push ni despliegue a producción.
+La preview se verificó con catálogo real antes de publicar. El deployment de
+producción se registra en `lanzamiento.md`; no se enviaron mensajes ni se realizaron pagos.

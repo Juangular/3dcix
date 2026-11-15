@@ -5,14 +5,15 @@ Web de catálogo de productos impresos en 3D, con atención y cierre de pedidos 
 - Web pública indicada por el propietario: https://3dcix.vercel.app
 - Stack actual: HTML, CSS y JavaScript; catálogo en Google Sheets mediante Apps Script.
 - Estado: catálogo, ficha y Mi pedido publicados en producción en Vercel.
+- Las reglas para cambios futuros y el inventario de skills están en [AGENTS.md](AGENTS.md) y [docs/skills.md](docs/skills.md).
 
 ## Documentación
 
 Empieza en [docs/README.md](docs/README.md). El contexto confirmado del negocio está
 en [PRODUCT.md](PRODUCT.md); el alcance, arquitectura y fases en [docs/plan.md](docs/plan.md).
 
-El catálogo exige el nuevo contrato de Apps Script, ya publicado por Juan. Revisa
-la implementación anterior y los pendientes en
+El catálogo usa el nuevo contrato de Apps Script, ya publicado por Juan. Revisa
+la implementación anterior y otros límites operativos en
 [docs/lanzamiento.md](docs/lanzamiento.md). La API antigua mostrará un error recuperable;
 no hay fallback a productos históricos. Mi pedido prepara una consulta para WhatsApp;
 no reserva stock ni confirma pagos. Consulta [docs/fase-3.md](docs/fase-3.md).

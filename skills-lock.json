@@ -35,6 +35,12 @@
       "sourceType": "autoskills-registry",
       "computedHash": "a4e6516a601f72ffd8bcd0d64609e8ba724d2ce92569a059a6890a5caadf072b"
     },
+    "image": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "skills/image/SKILL.md",
+      "computedHash": "15e7a3fe84d29d4b49e33d6ddc26d06c59f583fb30a4eaea37ad91cf4e0cc47f"
+    },
     "impeccable": {
       "source": "pbakaus/impeccable",
       "sourceType": "github",

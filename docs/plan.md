@@ -1,7 +1,7 @@
 # Plan de primera versión
 
-Estado: aprobado por Juan para comenzar datos y catálogo. Fecha: 15 de noviembre de 2026.
-Fase 1 implementada localmente; ver `fase-1.md`. Apps Script y producción pendientes.
+Estado: fases 1–3 publicadas. Juan aprobó comenzar datos y catálogo. Fecha: 15 de noviembre de 2026.
+Estado de cada release y cambios locales pendientes: `lanzamiento.md`.
 
 ## Objetivo y alcance
 
@@ -116,11 +116,11 @@ Apps Script no recibe pedidos ni ofrece escritura pública.
 |---|---|---|
 | 0. Aprobación | Este plan; reglas y campos | Aprobado para datos y catálogo |
 | 1. Datos | `apps-script/Código.gs`, `catalog-data.js`, plantilla, pruebas y salida pública permitida | API nueva publicada y probada; implementación antigua pendiente de coordinación |
-| 2. Experiencia | Propuesta visual; `index.html`, `producto.html`, `styles.css`, JS | Implementado localmente; consulta individual por WhatsApp. Ver `fase-2.md` |
-| 3. Pedido | `pedido.html`, cantidades, importes, persistencia, WhatsApp | Implementado y probado localmente; ver `fase-3.md` |
+| 2. Experiencia | Propuesta visual; `index.html`, `producto.html`, `styles.css`, JS | Implementado y publicado; ver `fase-2.md` |
+| 3. Pedido | `pedido.html`, cantidades, importes, persistencia, WhatsApp | Implementado y publicado; ver `fase-3.md` |
 | 4. Operación | Guía de Sheets, cálculo existente, fotos y borradores | Guía y plantilla de costos privadas preparadas; contenido final por revisar |
 | 5. Calidad y SEO | Dominio, metadata, schema, sitemap, medición acordada | Matriz de calidad ejecutada; incidencias y resultados registrados |
-| 6. Publicación | Preview Vercel, actualización manual de Apps Script y datos | Producción READY; condiciones comerciales y sincronización Git pendientes |
+| 6. Publicación | Preview Vercel, actualización manual de Apps Script y datos | Deployment READY; API heredada y reglas comerciales siguen pendientes |
 
 El código fuente de Apps Script se entregará en el repositorio, pero no se
 despliega allí automáticamente. Los tests pueden usar su entorno simulado.
@@ -143,4 +143,4 @@ columnas sin filtro y agregación de cantidades por ID al verificar stock.
 Después de aprobar: actualizar estado y decisiones; al implementar, registrar
 archivos/comandos reales y resultados. Al terminar el diseño: `DESIGN.md` describe
 lo construido. No se instalará `writing-plans` solo porque brainstorming la
-referencia: no está entre las catorce skills y el plan detallado queda escrito aquí.
+referencia: no está instalada; el plan detallado queda escrito aquí.

@@ -3,16 +3,18 @@
 Estado: estrategia general de calidad; fase 1 con pruebas locales registradas en
 `fase-1.md`. La matriz completa sigue pendiente: no se declara conformidad WCAG o SEO.
 
-## Aplicación de las 14 skills instaladas
+## Aplicación de las 15 skills instaladas
 
 Inventario confirmado con `npx skills list`. Se leyeron sus instrucciones locales.
-La petición de usarlas no significa ejecutar catorce procesos incompatibles ni añadir
-funcionalidades: cada una aporta en su dominio y en la fase que corresponde.
+La petición de usarlas no significa ejecutar quince procesos incompatibles ni añadir
+funcionalidades: cada una aporta en su dominio y en la fase que corresponde. Los
+paquetes obligatorios de uso conjunto están en [`skills.md`](skills.md) y en las
+instrucciones persistentes de [`../AGENTS.md`](../AGENTS.md).
 
 | Skill | Aplicación en este planeamiento | Evidencia o entrega posterior |
 |---|---|---|
 | `brainstorming` | Reutilizar entrevista, comparar enfoques, distinguir propuestas y aprobación | `PRODUCT.md`, decisiones del plan y revisión independiente del documento |
-| `find-skills` | Comprobar inventario y cobertura antes de buscar más herramientas | Catorce skills tras las tres instalaciones solicitadas; ninguna adicional necesaria |
+| `find-skills` | Comprobar inventario y cobertura antes de buscar más herramientas | Detectó brecha visual; `image` instalada y registrada en `docs/skills.md` |
 | `ponytail` | Stack existente, dependencias mínimas y alcance completo acotado | Sin panel/base de datos prematuros; pruebas pequeñas de lógica no trivial |
 | `cro` | Resolver desconfianza/dudas, priorizar catálogo y reducir campos | Flujo en `experiencia.md`, formulario de destino mínimo, hipótesis de medición |
 | `frontend-design` | Propuesta visual específica de objetos minimalistas, copy concreto | Brief visual; evitar métricas/testimonios decorativos; propuesta antes de UI |
@@ -25,6 +27,7 @@ funcionalidades: cada una aporta en su dominio y en la fase que corresponde.
 | `copywriting` | Edición puntual de copy funcional, diagnóstico C | Mensajes claros de error/vacío/reintento y «Consultar por WhatsApp», sin prometer compra completada |
 | `marketing-psychology` | Reducir incertidumbre y carga cognitiva con información comprobada | Stock/origen de fotos explícitos; sin escasez o prueba social inventadas |
 | `pricing` | Separar precio final, costo de transporte y cotización por volumen | Se elimina «Desde»; costos y precio tienda privados; fórmulas conservadas |
+| `image` | Mejorar fotografía, formato y carga del catálogo con activos reales | Optimizar fotos propias; generar solo escenas de apoyo etiquetadas, no sustituir la foto del producto por una imagen que invente detalles |
 
 ### Uso y límites de herramientas
 
@@ -35,6 +38,9 @@ funcionalidades: cada una aporta en su dominio y en la fase que corresponde.
   otra versión. En la implementación se priorizarán referencias del proyecto.
 - La consulta UI/UX se ejecutó sin persistir un sistema visual automáticamente.
   No hay stack vanilla en su catálogo de stacks: no se impone Tailwind por ello.
+- `image` de Coreyhaines guía generación y optimización. Para las fichas, la verdad
+  comercial prevalece: imágenes generadas no se presentan como fotos reales ni deben
+  inventar color, material, dimensiones, stock o acabado del producto.
 - Brainstorming menciona `writing-plans`, que no está instalada; se documenta
   el plan directamente, sin fingir una invocación ni instalarla sin necesidad.
 - La fase actual no ejecuta auditoría visual de una UI futura ni detector sobre

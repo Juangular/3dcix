@@ -1,14 +1,12 @@
 # Estado de lanzamiento
 
-Actualizado el 15 de noviembre de 2026. La nueva versión ya está en producción:
+Actualizado el 15 de noviembre de 2026. El commit `b93bdac` se publicó desde Git:
 
 - Producción: https://3dcix.vercel.app
-- Deployment: `dpl_DdLfFBMkw63DUtCwtuSeY2yaJZhn`, estado READY, target production.
-- Inspección: `https://vercel.com/juan-nunezs-projects/3dcix/DdLfFBMkw63DUtCwtuSeY2yaJZhn`.
+- Deployment: `dpl_wB5b7oNBT1tXWezqWUQrp98j6mSe`, estado READY, target production.
+- Inspección: `https://vercel.com/juan-nunezs-projects/3dcix/wB5b7oNBT1tXWezqWUQrp98j6mSe`.
 - Alias de producción `3dcix.vercel.app` confirmado por Vercel.
-- Método: despliegue directo de CLI, build `tools/build.cjs`, salida `dist/`.
-- Git no se actualizó: no se hizo commit ni push. Un siguiente push a `main` puede
-  activar otro deployment; sincronizar estos cambios con Git está pendiente.
+- Método: push a `main`; Vercel ejecutó `tools/build.cjs` y publicó `dist/`.
 
 La preview previa sigue disponible para comparación:
 
@@ -46,9 +44,9 @@ La preview previa sigue disponible para comparación:
    el momento del saldo para provincias. No se inventó una garantía o devolución.
 4. **Métricas:** la herramienta de analítica y sus permisos no se han seleccionado;
    no se instalaron servicios pagos ni se afirma haber medido ventas.
-5. **Git:** guardar en el repositorio los cambios que ya están desplegados, mediante
-   un commit/push cuidadosamente revisado. Cualquier push posterior a `main` puede
-   activar otro deployment.
+5. **Skills/documentación local:** la nueva skill `image`, el inventario agrupado y
+   `AGENTS.md` se añadieron después del deployment; aún esperan commit/push y no forman
+   parte de la versión publicada. No cambian el artefacto web.
 6. **API heredada:** la implementación antigua de Apps Script sigue accesible. No
    agregues datos privados a esa hoja; coordina actualizar/desactivar la versión
    anterior y revisar todos sus endpoints.
