@@ -1,164 +1,265 @@
+"use strict";
+
 const CONFIG = {
     whatsapp: "51902245387",
     itemsPorPagina: 10,
-    siteUrl: "https://juangular.github.io/3dcix"
+    siteUrl: "https://3dcix.vercel.app",
+    // API de lectura con publicación explícita y campos normalizados.
+    catalogoUrl: "https://script.google.com/macros/s/AKfycbzVDJLe8FpPEpR6Cl_1pmYGDy_k5aa7eJaZcPLpc27PNoCzguwnCH-CbpClMbRpcU24gg/exec"
 };
 
-function escAttr(str) {
-    return String(str).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+let productos = [];
+let productosFiltrados = [];
+let paginaActual = 1;
+let categoriaActual = null;
+let cargando = false;
+const moneda = new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" });
+const contenedor = document.getElementById("catalogo");
+const tagsContenedor = document.getElementById("categorias-tags");
+const loader = document.getElementById("loader");
+const aviso = document.getElementById("catalogo-aviso");
+const mensaje = document.getElementById("catalogo-mensaje");
+const reintentar = document.getElementById("catalogo-reintentar");
+const anterior = document.getElementById("btn-prev-page");
+const siguiente = document.getElementById("btn-next-page");
+const buscador = document.getElementById("buscar-productos");
+
+function nodo(tag, clase, contenido) {
+    const el = document.createElement(tag);
+    if (clase) el.className = clase;
+    if (contenido !== undefined) el.textContent = contenido;
+    return el;
 }
 
-function altImagenProducto(producto) {
-    return `${producto.nombre} — ${producto.cat} | Impresión 3D Lima 3DCIX`;
+function mostrarAviso(texto, permiteReintento = false) {
+    aviso.hidden = !texto;
+    mensaje.textContent = texto;
+    reintentar.hidden = !permiteReintento;
 }
 
 function actualizarSchemaProductos() {
-    const schemaEl = document.getElementById("schema-productos");
-    if (!schemaEl || productosFiltrados.length === 0) return;
-
-    const itemListElement = productosFiltrados.map((p, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        item: {
-            "@type": "Product",
-            name: p.nombre,
-            description: p.desc,
-            category: p.cat,
-            image: p.img,
-            brand: { "@type": "Brand", name: "3DCIX" },
-            offers: {
-                "@type": "Offer",
-                price: p.precio.toFixed(2),
-                priceCurrency: "PEN",
-                availability: "https://schema.org/InStock",
-                url: `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent("Hola 3DCIX, estoy interesado en comprar el producto: " + p.nombre)}`,
+    const schema = {
+        "@context": "https://schema.org", "@type": "ItemList",
+        name: "Catálogo de productos 3DCIX", numberOfItems: productosFiltrados.length,
+        itemListElement: productosFiltrados.map((p, i) => {
+            const offer = {
+                "@type": "Offer", price: p.precio.toFixed(2), priceCurrency: "PEN",
+                url: `${CONFIG.siteUrl}/#catalogo-section`,
                 seller: { "@type": "Organization", name: "3DCIX" }
-            }
-        }
-    }));
-
-    schemaEl.textContent = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        name: "Catálogo de impresión 3D — 3DCIX Lima",
-        numberOfItems: productosFiltrados.length,
-        itemListElement
-    });
+            };
+            // Stock desconocido no se convierte en InStock ni en fabricación confirmada.
+            if (p.stock !== null) offer.availability = p.stock > 0
+                ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+            const item = { "@type": "Product", name: p.nombre, description: p.desc,
+                category: p.cat, brand: { "@type": "Brand", name: "3DCIX" }, offers: offer };
+            if (p.img.length) item.image = p.img.map(src => new URL(src, `${CONFIG.siteUrl}/`).href);
+            return { "@type": "ListItem", position: i + 1, item };
+        })
+    };
+    document.getElementById("schema-productos").textContent = JSON.stringify(schema);
 }
 
-// Variable global para almacenar los productos que vienen de Google Sheets
-let productos = []; 
-let productosFiltrados = [];
-let paginaActual = 1;
-let categoriaActual = "Todos";
-
-// URL que te dio Google en el paso anterior
-const URL_API = "https://script.google.com/macros/s/AKfycbwvMpBZaHUWHQRGygDb-Q4oZg0rw7wjRTMLFgwaBcps9ecztfX_u2q9FeNvxwfgKSWzug/exec"; 
-
-const loader = document.getElementById("loader");
-
-function toggleLoader(visible) {
-    if (loader) loader.classList.toggle("hidden", !visible);
-}
-
-// Función para cargar los datos
 async function inicializarCatalogo() {
-    toggleLoader(true);
+    if (cargando) return;
+    cargando = true;
+    loader.hidden = false;
+    loader.classList.remove("hidden");
+    loader.setAttribute("aria-busy", "true");
+    contenedor.setAttribute("aria-busy", "true");
+    mostrarAviso("");
+    reintentar.disabled = true;
+    anterior.disabled = siguiente.disabled = true;
+    productos = [];
+    productosFiltrados = [];
+    contenedor.replaceChildren();
+    tagsContenedor.replaceChildren();
+    actualizarSchemaProductos();
     try {
-        const respuesta = await fetch(URL_API);
-        productos = await respuesta.json();
-        productosFiltrados = [...productos];
+        const resultado = await CatalogoDatos.cargar(CONFIG.catalogoUrl);
+        productos = resultado.productos;
+        leerEstado();
+        if (resultado.descartados) console.warn(`Registros de catálogo omitidos: ${resultado.descartados}`);
         crearFiltros();
-        render();
-        actualizarSchemaProductos();
+        aplicarFiltros();
+        if (!productos.length) mostrarAviso("Aún no hay productos publicados. Puedes consultar el catálogo por WhatsApp.");
     } catch (error) {
-        console.error("No se pudieron cargar los productos:", error);
+        console.error("No se pudo cargar el catálogo:", error.message);
+        mostrarAviso("No pudimos cargar los productos. Vuelve a intentarlo o consúltanos por WhatsApp.", true);
     } finally {
-        toggleLoader(false);
+        cargando = false;
+        reintentar.disabled = false;
+        loader.classList.add("hidden");
+        loader.hidden = true;
+        loader.setAttribute("aria-busy", "false");
+        contenedor.setAttribute("aria-busy", "false");
+        actualizarPaginacion();
     }
 }
 
-// Llama a esta función al final de tu archivo en lugar de llamar a render() directamente
-inicializarCatalogo();
-
-const contenedor = document.getElementById("catalogo");
-const tagsContenedor = document.getElementById("categorias-tags");
-
 function crearFiltros() {
-    const categorias = ["Todos", ...new Set(productos.map(p => p.cat))];
-    tagsContenedor.innerHTML = categorias.map(c => 
-        `<span class="tag ${c === categoriaActual ? 'active' : ''}" onclick="filtrar('${c}')">${c}</span>`
-    ).join('');
+    const categorias = [null, ...new Set(productos.map(p => p.cat))];
+    tagsContenedor.replaceChildren(...categorias.map(cat => {
+        const boton = nodo("button", `tag${cat === categoriaActual ? " active" : ""}`, cat === null ? "Todos" : cat);
+        boton.type = "button";
+        boton.setAttribute("aria-pressed", String(cat === categoriaActual));
+        boton.addEventListener("click", () => filtrar(cat));
+        return boton;
+    }));
 }
 
 function filtrar(cat) {
     categoriaActual = cat;
     paginaActual = 1;
-    productosFiltrados = cat === "Todos" ? [...productos] : productos.filter(p => p.cat === cat);
-    crearFiltros();
+    guardarEstado("pushState");
+    aplicarFiltros();
+}
+
+function actualizarBotones() {
+    // Conservar los botones mantiene el foco del filtro activado con teclado.
+    [...tagsContenedor.children].forEach((boton, i) => {
+        const activo = i === 0 ? categoriaActual === null : boton.textContent === categoriaActual;
+        boton.classList.toggle("active", activo);
+        boton.setAttribute("aria-pressed", String(activo));
+    });
+}
+
+function aplicarFiltros() {
+    const query = buscador.value.trim().toLocaleLowerCase("es-PE");
+    productosFiltrados = productos.filter(p => (categoriaActual === null || p.cat === categoriaActual)
+        && [p.nombre, p.cat, p.desc].some(texto => texto.toLocaleLowerCase("es-PE").includes(query)));
+    paginaActual = Math.min(paginaActual, Math.max(1, Math.ceil(productosFiltrados.length / CONFIG.itemsPorPagina)));
+    actualizarBotones();
     render();
-    actualizarSchemaProductos();
+    if (productos.length && !productosFiltrados.length) mostrarAviso("No encontramos productos con esa búsqueda. Prueba con otro término o categoría.");
+    else mostrarAviso("");
+}
+
+function leerEstado() {
+    const params = new URLSearchParams(location.search);
+    buscador.value = params.get("q") || "";
+    const categoria = params.get("categoria");
+    categoriaActual = productos.some(p => p.cat === categoria) ? categoria : null;
+    const pagina = Number(params.get("pagina"));
+    paginaActual = Number.isSafeInteger(pagina) && pagina > 0 ? pagina : 1;
+}
+
+function guardarEstado(metodo) {
+    const url = new URL(location.href);
+    const busqueda = buscador.value.trim();
+    if (busqueda) url.searchParams.set("q", busqueda); else url.searchParams.delete("q");
+    if (categoriaActual !== null) url.searchParams.set("categoria", categoriaActual); else url.searchParams.delete("categoria");
+    if (paginaActual > 1) url.searchParams.set("pagina", paginaActual); else url.searchParams.delete("pagina");
+    history[metodo](null, "", url);
+}
+
+function flecha(dir) {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    const path = document.createElementNS(svg.namespaceURI, "path");
+    path.setAttribute("d", dir < 0 ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "2");
+    svg.append(path);
+    return svg;
+}
+
+function crearCarrusel(p) {
+    const carrusel = nodo("div", "carrusel");
+    const sinFoto = nodo("p", "foto-no-disponible", "Fotografía no disponible. Solicítala por WhatsApp.");
+    carrusel.append(sinFoto);
+    const imagenes = p.img.map((src, i) => {
+        const imagen = nodo("img", i === 0 ? "activa" : "");
+        imagen.alt = `${p.nombre}, imagen ${i + 1}`;
+        imagen.width = 600;
+        imagen.height = 520;
+        imagen.loading = "lazy";
+        imagen.decoding = "async";
+        imagen.src = src;
+        imagen.addEventListener("error", () => {
+            imagen.dataset.fallida = "true";
+            if (imagen.classList.contains("activa")) mostrar(i);
+        });
+        return imagen;
+    });
+    let actual = 0;
+    const controles = [];
+    function mostrar(indice) {
+        actual = indice;
+        imagenes.forEach((img, i) => img.classList.toggle("activa", i === actual));
+        const rota = !imagenes.length || imagenes[actual].dataset.fallida === "true";
+        sinFoto.hidden = !rota;
+        imagenes.forEach(img => { img.hidden = img.dataset.fallida === "true"; });
+        controles.forEach(boton => { boton.hidden = imagenes.every(img => img.dataset.fallida === "true"); });
+    }
+    carrusel.append(...imagenes);
+    if (imagenes.length > 1) [-1, 1].forEach(dir => {
+        const boton = nodo("button", `btn-carrusel ${dir < 0 ? "btn-prev" : "btn-next"}`);
+        boton.type = "button";
+        boton.setAttribute("aria-label", `${dir < 0 ? "Imagen anterior" : "Imagen siguiente"} de ${p.nombre}`);
+        boton.append(flecha(dir));
+        boton.addEventListener("click", () => mostrar((actual + dir + imagenes.length) % imagenes.length));
+        controles.push(boton);
+        carrusel.append(boton);
+    });
+    mostrar(0);
+    return carrusel;
 }
 
 function render() {
-    contenedor.innerHTML = "";
     const inicio = (paginaActual - 1) * CONFIG.itemsPorPagina;
-    const itemsAMostrar = productosFiltrados.slice(inicio, inicio + CONFIG.itemsPorPagina);
-
-    itemsAMostrar.forEach(p => {
-        const urlWa = `https://wa.me/${CONFIG.whatsapp}?text=Hola%203DCIX,%20estoy%20interesado%20en%20comprar%20el%20producto:%20${encodeURIComponent(p.nombre)}`;
-        
-        const tarjeta = document.createElement("article");
-        tarjeta.className = "tarjeta-producto";
-        tarjeta.setAttribute("itemscope", "");
-        tarjeta.setAttribute("itemtype", "https://schema.org/Product");
-        const altTexto = escAttr(altImagenProducto(p));
-        tarjeta.innerHTML = `
-            <div class="carrusel">
-                ${p.img.map((img, i) => `<img src="${img}" class="${i===0?'activa':''}" alt="${altTexto}" itemprop="image" ${i > 0 ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async">`).join('')}
-                ${p.img.length > 1 ? `
-                    <button class="btn-carrusel btn-prev" onclick="cambiarImg(this, -1)" aria-label="Imagen anterior de ${escAttr(p.nombre)}">❮</button>
-                    <button class="btn-carrusel btn-next" onclick="cambiarImg(this, 1)" aria-label="Imagen siguiente de ${escAttr(p.nombre)}">❯</button>
-                ` : ''}
-            </div>
-            <div class="info-producto">
-                <span class="categoria-label" itemprop="category">${p.cat}</span>
-                <h2 itemprop="name">${p.nombre}</h2>
-                <p class="desc-producto" itemprop="description">${p.desc}</p>
-                <div class="precio" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                    <meta itemprop="priceCurrency" content="PEN">
-                    <span itemprop="price" content="${p.precio.toFixed(2)}">S/ ${p.precio.toFixed(2)}</span>
-                    <link itemprop="availability" href="https://schema.org/InStock">
-                </div>
-                <a href="${urlWa}" target="_blank" rel="noopener" class="boton-comprar">Comprar desde WhatsApp</a>
-            </div>
-        `;
-        contenedor.appendChild(tarjeta);
-    });
+    contenedor.replaceChildren(...productosFiltrados.slice(inicio, inicio + CONFIG.itemsPorPagina).map(p => {
+        const tarjeta = nodo("article", "tarjeta-producto");
+        tarjeta.setAttribute("role", "listitem");
+        const info = nodo("div", "info-producto");
+        info.append(nodo("span", "categoria-label", p.cat), nodo("h3", "", p.nombre));
+        if (p.desc) info.append(nodo("p", "desc-producto", p.desc));
+        info.append(nodo("div", "precio", moneda.format(p.precio)));
+        info.append(nodo("p", "disponibilidad-producto", CatalogoDatos.disponibilidad(p)));
+        info.append(nodo("p", "foto-origen", p.foto_tipo === "real" ? "Fotografía del producto."
+            : p.foto_tipo === "referencia" ? "Imagen de referencia." : "Origen de la fotografía por confirmar."));
+        const enlace = nodo("a", "boton-comprar", "Ver producto");
+        const detalle = new URL("producto.html", location.href);
+        detalle.searchParams.set("id", p.id);
+        const regreso = new URLSearchParams(location.search);
+        ["q", "categoria", "pagina"].forEach(key => {
+            if (regreso.has(key)) detalle.searchParams.set(key, regreso.get(key));
+        });
+        enlace.href = detalle.href;
+        enlace.setAttribute("aria-label", `Ver producto: ${p.nombre}`);
+        info.append(enlace);
+        tarjeta.append(crearCarrusel(p), info);
+        return tarjeta;
+    }));
     actualizarPaginacion();
+    actualizarSchemaProductos();
+    document.getElementById("resultados").textContent = productosFiltrados.length
+        ? `${productosFiltrados.length} ${productosFiltrados.length === 1 ? "producto" : "productos"}` : "";
 }
 
 function actualizarPaginacion() {
-    const totalPaginas = Math.ceil(productosFiltrados.length / CONFIG.itemsPorPagina);
-    document.getElementById("info-página").innerText = `Página ${paginaActual} de ${totalPaginas || 1}`;
-    document.getElementById("btn-prev-page").disabled = paginaActual === 1;
-    document.getElementById("btn-next-page").disabled = paginaActual === totalPaginas || totalPaginas === 0;
+    const paginas = Math.ceil(productosFiltrados.length / CONFIG.itemsPorPagina);
+    document.getElementById("info-página").textContent = `Página ${paginaActual} de ${paginas || 1}`;
+    anterior.disabled = cargando || paginaActual <= 1;
+    siguiente.disabled = cargando || paginaActual >= paginas;
+    document.querySelector(".paginacion").hidden = paginas <= 1;
 }
 
-const catalogoSection = document.getElementById("catalogo-section");
-
-function scrollToCatalogo() {
-    catalogoSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+function cambiarPagina(dir) {
+    const paginas = Math.ceil(productosFiltrados.length / CONFIG.itemsPorPagina);
+    if (cargando || paginaActual + dir < 1 || paginaActual + dir > paginas) return;
+    paginaActual += dir;
+    guardarEstado("pushState");
+    render();
+    const seccion = document.getElementById("catalogo-section");
+    seccion.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    seccion.focus({ preventScroll: true });
 }
 
-document.getElementById("btn-prev-page").onclick = () => { paginaActual--; render(); scrollToCatalogo(); };
-document.getElementById("btn-next-page").onclick = () => { paginaActual++; render(); scrollToCatalogo(); };
-
-window.cambiarImg = (btn, dir) => {
-    const carrusel = btn.parentElement;
-    const imgs = carrusel.querySelectorAll('img');
-    let act = 0;
-    imgs.forEach((img, i) => { if(img.classList.contains('activa')){ act=i; img.classList.remove('activa'); } });
-    let next = (act + dir + imgs.length) % imgs.length;
-    imgs[next].classList.add('activa');
-};
+anterior.addEventListener("click", () => cambiarPagina(-1));
+siguiente.addEventListener("click", () => cambiarPagina(1));
+reintentar.addEventListener("click", inicializarCatalogo);
+buscador.addEventListener("input", () => { paginaActual = 1; guardarEstado("replaceState"); aplicarFiltros(); });
+window.addEventListener("popstate", () => { leerEstado(); aplicarFiltros(); });
+inicializarCatalogo();

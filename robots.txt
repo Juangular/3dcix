@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://juangular.github.io/3dcix/sitemap.xml
+Sitemap: https://3dcix.vercel.app/sitemap.xml
